@@ -3,22 +3,25 @@
         clear-output clear-jekyll clean reset
 
 # Usage:
-# make                 # execute and convert all Jupyter notebooks
-# make jupyter         # startup Docker container running Jupyter server
-# make execute         # execute all Jupyter notebooks (in place)
-# make convert         # convert all Jupyter notebooks (even if not changed)
-# make sync            # copy all converted files to necessary directories
-# make jekyll          # startup Docker container running Jekyll server
-# make containers      # launch all Docker containers
-# make commit          # git add/commit all synced files
-# make push            # git push to remote branch
-# make publish         # WARNING: convert, sync, commit, and push all at once
-# make stop-containers # simply stops all running Docker containers
-# make clear-nb        # simply clears Jupyter notebook output
-# make clear-output    # removes all converted files
-# make clear-jekyll    # removes Jekyll _site/ directory
-# make clean           # combines all clearing commands into one
-# make reset           # WARNING: completely reverses all changes
+# make                    # execute and convert all Jupyter notebooks
+# make jupyter            # startup Docker container running Jupyter server
+# make execute            # execute all Jupyter notebooks (in place)
+# make convert            # convert all Jupyter notebooks (even if not changed)
+# make sync               # copy all converted files to necessary directories
+# make jekyll             # startup Docker container running Jekyll server
+# make build-site         # build jekyll static site
+# make containers         # launch all Docker containers
+# make commit             # git add/commit all synced files
+# make push               # git push to remote branch
+# make publish            # WARNING: convert, sync, commit, and push all at once
+# make stop-containers    # simply stops all running Docker containers
+# make restart-containers # restart all containers
+# make unsync             # remove all synced files
+# make clear-nb           # simply clears Jupyter notebook output
+# make clear-output       # removes all converted files
+# make clear-jekyll       # removes Jekyll _site/ directory
+# make clean              # combines all clearing commands into one
+# make reset              # WARNING: completely reverses all changes
 
 ################################################################################
 # GLOBALS                                                                      #
