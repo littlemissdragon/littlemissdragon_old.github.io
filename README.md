@@ -1,6 +1,27 @@
 # Jekyll-Data-Science
 A Jekyll project template for Data Science
 
+## Project Organization
+```
+├── Makefile       <- Makefile with commands like `make build-site`.
+├── README.md      <- The top-level README for developers using this project.
+├── _jupyter
+│   ├── notebooks  <- Jupyter notebooks for conversion are stored here.
+│   └── templates  <- Where nbconvert templates are stored.
+│
+├── _layouts       <- Where Jekyll layout templates are stored.
+│
+├── _posts         <- Where Jekyll markdown posts are stored.
+│
+├── assets
+│   ├── css        <- Where CSS files are stored.
+│   └── images     <- Where image files are stored.
+│
+├── pages          <- Where pages (i.e. non-post files) are stored.
+│
+└── _config.yml    <- The config file for Jekyll.
+```
+
 ## Make
 Here we will document the different `make` commands defined in the `Makefile`.
 All *commands* (excluding the `all` command which is simply executed by
