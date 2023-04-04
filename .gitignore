@@ -26,3 +26,6 @@ data/
 
 # macos
 .DS_Store
+
+# Keras
+.keras
