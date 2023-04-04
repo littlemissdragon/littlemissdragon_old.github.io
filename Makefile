@@ -85,7 +85,7 @@ CNVRSNFLGS = ${LGLFL} ${TMPFLGS} ${RMVFLGS}
 
 # notebook-related variables
 CURRENTDIR := $(PWD)
-NOTEBOOKS  := $(wildcard ${INTDR}/*.ipynb)
+NOTEBOOKS  := $(shell find ${INTDR} -name "*.ipynb" -not -path "*/.ipynb_*/*")
 CONVERTNB  := $(addprefix ${OUTDR}/, $(notdir $(NOTEBOOKS:%.ipynb=%.${OEXT})))
 
 # docker-related variables
@@ -131,13 +131,15 @@ jupyter:
 
 # rule for executing single notebooks before converting
 %.ipynb:
-	@ echo "Executing ${INTDR}/$@ in place."
-	@ ${DCKRRUN} ${NBEXEC} ${INTDR}/$@
+	@ TARGET=$$(echo "${NOTEBOOKS}" | sed "s/ /\n/g" | grep "$@"); \
+	echo "Executing $${TARGET} in place."; \
+	${DCKRRUN} ${NBEXEC} $${TARGET}
 
 # rule for converting single notebooks to HTML
 ${OUTDR}/%.${OEXT}: %.ipynb
-	@ echo "Converting ${INTDR}/$< to ${OFRMT}"
-	@ ${DCKRRUN} ${NBCNVR} ${INTDR}/$<
+	@ TARGET=$$(echo "${NOTEBOOKS}" | sed "s/ /\n/g" | grep "$<"); \
+	echo "Converting $${TARGET} to ${OFRMT}"; \
+	${DCKRRUN} ${NBCNVR} $${TARGET}
 
 # execute all notebooks and store output inplace
 execute:
