@@ -1,6 +1,6 @@
-.PHONY: all jupyter execute convert sync jekyll build-site containers commit \
-        push publish stop-containers restart-containers unsync clear-nb \
-        clear-output clear-jekyll clean reset
+.PHONY: all jupyter execute convert sync jekyll build-site pause address \
+	      containers commit push publish stop-containers restart-containers \
+	      unsync clear-nb clear-output clear-jekyll clean reset
 
 # Usage:
 # make                    # execute and convert all Jupyter notebooks
@@ -10,6 +10,8 @@
 # make sync               # copy all converted files to necessary directories
 # make jekyll             # startup Docker container running Jekyll server
 # make build-site         # build jekyll static site
+# make pause              # pause PSECS (to pause between commands)
+# make address            # get Docker container address/port
 # make containers         # launch all Docker containers
 # make commit             # git add/commit all synced files
 # make push               # git push to remote branch
@@ -41,6 +43,7 @@ FGEXT := _files
 FGSDR := 'assets/images/{notebook_name}${FGEXT}'
 GITBR := master
 GITRM := origin
+PSECS := 5
 
 # extensions available
 OEXT_html     = html
@@ -121,12 +124,6 @@ jupyter:
 	           -p 8888 \
 	           -v ${CURRENTDIR}:/home/jovyan \
 	           ${DCKRIMG} && \
-	sleep 5 && \
-	  echo "Server address: $$(docker logs ${JPTCTNR} 2>&1 | \
-	    grep http://127.0.0.1 | tail -n 1 | \
-	    sed s/:8888/:$$(docker port ${JPTCTNR} | \
-	    grep '0.0.0.0:' | awk '{print $$3}' | sed 's/0.0.0.0://g')/g | \
-			tr -d '[:blank:]')" && \
 	echo "${JPTCTNR}" >> .running_containers
 
 # rule for executing single notebooks before converting
@@ -176,9 +173,6 @@ jekyll:
 	           -p 4000 \
 	           jekyll/jekyll:4.2.0 \
 	             jekyll serve && \
-	sleep 5 && \
-	   echo "Server address: http://0.0.0.0:$$(docker port ${JKLCTNR} | \
-	    grep '0.0.0.0:' | awk '{print $$3'} | sed 's/0.0.0.0://g')" && \
 	echo "${JKLCTNR}" >> .running_containers
 
 # build jekyll static site
@@ -192,8 +186,36 @@ build-site:
 	             jekyll build && \
 	echo "Site successfully built!"
 
+# simply wait for a certain amount of time
+pause:
+	@ echo "Sleeping ${PSECS} seconds ..."
+	@ sleep ${PSECS}
+
+# get containerized server address
+address:
+	@ if [ -f "${CURRENTDIR}/.running_containers" ]; then \
+	while read container; do \
+	  if echo "$${container}" | grep -q "${JPTCTNR}"; then \
+	    echo "Jupyter server address: $$(docker logs $${container} 2>&1 | \
+	          grep http://127.0.0.1 | tail -n 1 | \
+	          sed s/:8888/:$$(docker port $${container} | \
+	          grep '0.0.0.0:' | awk '{print $$3}' | sed 's/0.0.0.0://g')/g | \
+	          tr -d '[:blank:]')"; \
+	  elif echo "$${container}" | grep -q "${JKLCTNR}"; then \
+	    echo "Jekyll server address: http://0.0.0.0:$$(docker port ${JKLCTNR} | \
+	          grep '0.0.0.0:' | awk '{print $$3'} | sed 's/0.0.0.0://g')"; \
+	  else \
+	    echo "Could not find running container: $${container}." \
+	         "Try running: make address" \
+	         "DCTNR=$$(echo $${container} | sed 's/^.*\.//g')"; \
+	  fi \
+	done < "${CURRENTDIR}/.running_containers"; \
+	else \
+	  echo ".running_containers file not found. Is a Docker container running?"; \
+	fi
+
 # launch all docker containers
-containers: jupyter jekyll
+containers: jupyter jekyll pause address
 
 # git add and git commit synced files
 commit:

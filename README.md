@@ -37,6 +37,8 @@ command, simply run `make -n [COMMAND]`.
 + `sync`: copy all converted files to necessary directories
 + `jekyll`: startup Docker container running Jekyll server
 + `build-site`: build Jekyll static site
++ `pause`: pause PSECS (to pause between commands)
++ `address`: get Docker container address/port
 + `containers`: launch all Docker containers
 + `commit`: git add/commit all synced files
 + `push`: git push to remote branch
