@@ -43,6 +43,7 @@ command, simply run `make -n [COMMAND]`.
 + `commit`: git add/commit all synced files
 + `push`: git push to remote branch
 + `publish`: [ *WARNING* ] convert, sync, commit, and push all at once
++ `list-containers`: list all running containers
 + `stop-containers`: simply stops all running Docker containers
 + `restart-containers`: restart all containers
 + `unsync`: remove all synced files

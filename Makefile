@@ -1,6 +1,6 @@
 .PHONY: all jupyter execute convert sync jekyll build-site pause address \
-	      containers commit push publish stop-containers restart-containers \
-	      unsync clear-nb clear-output clear-jekyll clean reset
+        containers commit push publish list-containers stop-containers \
+        restart-containers unsync clear-nb clear-output clear-jekyll clean reset
 
 # Usage:
 # make                    # execute and convert all Jupyter notebooks
@@ -16,6 +16,7 @@
 # make commit             # git add/commit all synced files
 # make push               # git push to remote branch
 # make publish            # WARNING: convert, sync, commit, and push all at once
+# make list-containers    # list all running containers
 # make stop-containers    # simply stops all running Docker containers
 # make restart-containers # restart all containers
 # make unsync             # remove all synced files
@@ -219,8 +220,7 @@ address:
 	          grep '0.0.0.0:' | awk '{print $$3'} | sed 's/0.0.0.0://g')"; \
 	  else \
 	    echo "Could not find running container: $${container}." \
-	         "Try running: make address" \
-	         "DCTNR=$$(echo $${container} | sed 's/^.*\.//g')"; \
+	         "Try running: make list-containers"; \
 	  fi \
 	done < "${CURRENTDIR}/.running_containers"; \
 	else \
@@ -245,6 +245,17 @@ push:
 
 # super command to convert, sync, commit, and push new jupyter posts
 publish: all sync commit push
+
+# list all running containers
+list-containers:
+	@ if [ -f "${CURRENTDIR}/.running_containers" ]; then \
+	echo "Currently running containers:"; \
+	while read container; do \
+	  echo "-->  $${container}"; \
+	done < "${CURRENTDIR}/.running_containers"; \
+	else \
+	  echo ".running_containers file not found. Is a Docker container running?"; \
+	fi
 
 # stop all containers
 stop-containers:
