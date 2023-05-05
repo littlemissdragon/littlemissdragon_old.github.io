@@ -116,15 +116,22 @@ all: ${CONVERTNB}
 
 # launch jupyter notebook development Docker image
 jupyter:
-	@ echo "Launching Jupyter in Docker container -> ${JPTCTNR} ..."
-	@ docker run -d \
-	           --rm \
-	           --name ${JPTCTNR} \
-	           -e JUPYTER_ENABLE_LAB=yes \
-	           -p 8888 \
-	           -v ${CURRENTDIR}:/home/jovyan \
-	           ${DCKRIMG} && \
-	echo "${JPTCTNR}" >> .running_containers
+	@ if ! docker ps --format={{.Names}} | grep -q "${JPTCTNR}"; then \
+	  echo "Launching Jupyter in Docker container -> ${JPTCTNR} ..."; \
+	  docker run -d \
+	             --rm \
+	             --name ${JPTCTNR} \
+	             -e PYTHONPATH=/home/jovyan/src \
+	             -e JUPYTER_ENABLE_LAB=yes \
+	             -p 8888 \
+	             -v "${CURRENTDIR}":/home/jovyan \
+	             ${DCKRIMG} && \
+	  if ! grep -sq "${JPTCTNR}" "${CURRENTDIR}/.running_containers"; then \
+	    echo "${JPTCTNR}" >> .running_containers; \
+	  fi \
+	else \
+	  echo "Container already running: ${JPTCTNR}. Try setting DCTNR manually."; \
+	fi
 
 # rule for executing single notebooks before converting
 %.ipynb:
@@ -165,15 +172,21 @@ sync:
 
 # launch jekyll local server Docker image
 jekyll:
-	@ echo "Launching Jekyll in Docker container -> ${JKLCTNR} ..."
-	@ docker run -d \
-	           --rm \
-	           --name ${JKLCTNR} \
-	           -v ${CURRENTDIR}:/srv/jekyll:Z \
-	           -p 4000 \
-	           jekyll/jekyll:4.2.0 \
-	             jekyll serve && \
-	echo "${JKLCTNR}" >> .running_containers
+	@ if ! docker ps --format={{.Names}} | grep -q "${JKLCTNR}"; then \
+	  echo "Launching Jekyll in Docker container -> ${JKLCTNR} ..."; \
+	  docker run -d \
+	             --rm \
+	             --name ${JKLCTNR} \
+	             -v ${CURRENTDIR}:/srv/jekyll:Z \
+	             -p 4000 \
+	             jekyll/jekyll:4.2.0 \
+	               jekyll serve && \
+	  if ! grep -sq "${JKLCTNR}" "${CURRENTDIR}/.running_containers"; then \
+	    echo "${JKLCTNR}" >> .running_containers; \
+	  fi \
+	else \
+	  echo "Container already running: ${JKLCTNR}. Try setting DCTNR manually."; \
+	fi
 
 # build jekyll static site
 build-site:
