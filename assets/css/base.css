@@ -78,14 +78,10 @@ h2{
   color: #E4E6EB;
 }
 
-body{
-  display: grid;
-  font-family: "Courier", monospace;
-  grid-template-columns: var(--margin-border) var(--margin-grid) repeat(6, 6fr var(--margin-grid)) var(--margin-border);
-  margin: 0;
-  padding: 0;
-  scroll-behavior: smooth;
-  background: #181818;
+body {
+    margin: 60px auto;
+    width: 70%;
+    background: #181818;
 }
 
 ul.posts {
@@ -106,10 +102,9 @@ ul.posts li {
 .footer{
   position: fixed;
   bottom: 0;
-  padding: 15px var(--margin-border) 15px;
   display: table;
   width: 100%;
-  background-color: #22303C;
+
 }
 
 .footer-right h2:first-child, .footer-left h2:last-child{margin: 0;}
@@ -126,12 +121,12 @@ ul.posts li {
 }
 
 .footer-right h2{
-  margin-left: 20px;
+  margin-left: 15px;
   display: inline-block;
 }
 
 .footer-left h2{
-  margin-right: 20px;
+  margin-right: 15px;
   display: inline-block;
 }
 
@@ -145,7 +140,7 @@ ul.posts li {
   grid-column: 2/ span 13;
   display: table;
   height: 50px;
-  margin: 15px 0 50px 0;
+  margin: 15px 5px 50px 5px;
 }
 
 .header p{
