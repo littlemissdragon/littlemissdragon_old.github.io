@@ -1,0 +1,23 @@
+---
+layout: default
+title: Lady Dragon | Blog
+---
+
+<div class="bandeau">
+  <div id="name"><p>Articles<p></div>
+  <div id="time"><p>Time<p></div>
+</div>
+
+
+<ul class="content-scroll">
+		{% for post in site.posts %}
+			{% capture post_lang %}{{ post.lang | default: site_lang }}{% endcapture %}
+			{% capture lang %}{% if post_lang != site_lang %}{{ post_lang }}{% endif %}{% endcapture %}
+			<li class="tooltip projet">
+				<h2 class="blog-title">
+					<a href="{{ post.url | relative_url }}"{% if lang != empty %} lang="{{ lang }}"{% endif %}>{{ post.title | escape }}{% if post.external-url %} &rarr;{% endif %}</a>
+				</h2>
+        <h2>{{ post.date | date: "%b %-d, %Y" }}</h2>
+			</li>
+		{% endfor %}
+</ul>

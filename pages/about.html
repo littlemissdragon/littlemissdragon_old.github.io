@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/favicon/site.webmanifest">
+    <title>Lady Dragon | About</title>
+    <link href="/assets/css/base.css" rel="stylesheet">
+    <style>
+      .contact{
+      	grid-column: 10/span 4;
+      }
+
+      .about{
+      	grid-column: 4/span 5;
+      }
+
+      @media screen and (max-width: 900px) {
+        .contact,
+        .about{
+        	grid-column: 2/span 13;
+        	margin-bottom: 1.3em;
+        }
+
+        .contact{
+        	margin-bottom: 80px;
+        }
+          .footer-left{
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+        <p><a href="/index.html">Lady Dragon</a></p>
+        <p><a href="/pages/blog.html">Blog</a></p>
+        <p><a href="/pages/about.html">Information</a></p>
+    </header>
+    <div class="about">
+      <p>About</p>
+      <br>
+      <p>
+        Minimum cost, rigorous objectivity, and optimal strategies are what we
+        pursue at Lady Dragon. With our services, we help you turn your ideas to
+        businesses and beyond.
+
+      </p>
+    </div>
+    <div class="contact">
+      <p>Contact</p><br>
+      <p>
+        <a href="mailto:littlemissdragon@outlook.com">
+          <img src="/assets/images/mailbox-32x32.png" alt="E-mail address"/>
+        </a>
+        <a target="_blank" href="https://github.com/littlemissdragon">
+          <img src="/assets/images/octocat-32x32.png" alt="Lady Dragon GitHub page"/>
+        </a>
+      </p>
+    </div>
+    <div class="footer">
+      <div class="footer-left">
+        <p>All rights reserved © 2022 - <span id="year"></span></p>
+      </div>
+      <div class="footer-right">
+      </div>
+    </div>
+  </body>
+  <script>
+    // get new date object
+    var dt = new Date();
+    // update copyright range to most recent year
+    document.getElementById('year').innerHTML = dt.getFullYear();
+  </script>
+</html>
