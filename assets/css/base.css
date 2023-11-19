@@ -24,6 +24,10 @@ html{
 .blurb {
   text-align: center;
   line-height: 2em;
+  position: absolute;
+  width: 70%;
+  top: 30%;
+  left: 15%;
 }
 
 ul,
