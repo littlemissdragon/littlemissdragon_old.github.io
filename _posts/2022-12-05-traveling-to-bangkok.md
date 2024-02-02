@@ -4,6 +4,8 @@ title: "First Trip to Bangkok"
 date: 2022-12-05
 ---
 
+(This post is a demo to show how this website can be used. The content of the article is fictional, and the images are from the internet. If there is any infringement, please contact us to delete them.)
+
 As a 25-year-old woman, I had always dreamed of visiting the bustling city of Bangkok. Finally, my dream came true and I found myself exploring this vibrant Southeast Asian metropolitan area for the first time.
 
 My journey began with arriving at Suvarnabhumi Airport, where I was greeted by a friendly face - my friend from Canada who had been living in Bangkok for several years. Together, we explored some of the city's famous tourist attractions such as Wat Arun temple and the Grand Palace. These landmarks were breathtakingly beautiful and truly showcased Thai culture at its finest.
